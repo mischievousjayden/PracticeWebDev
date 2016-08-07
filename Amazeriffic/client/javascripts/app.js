@@ -1,60 +1,33 @@
-var todosjson = [
-    { 
-        "description" : "Get groceries",
-        "tags"  : [ "shopping", "chores" ]
-    },
-    { 
-        "description" : "Make up some new ToDos",
-        "tags"  : [ "writing", "work" ]
-    },
-    {
-        "description" : "Prep for Monday's class",
-        "tags"  : [ "work", "teaching" ]
-    },
-    { 
-        "description" : "Answer emails",
-        "tags"  : [ "work" ]
-    },
-    { 
-        "description" : "Take Gracie to the park",
-        "tags"  : [ "chores", "pets" ]
-    },
-    { 
-        "description" : "Finish writing this book",
-        "tags"  : [ "writing", "work" ]
-    }
-];
-
-var getToDos = function(toDoObjects) {
-    var toDos = toDoObjects.map(function(toDo) {
-        return toDo.description;
-    });
-
-    return toDos;
-}
-
-var getOrganizedByTag = function(toDoObjects) {
-    var organizedByTag = [];
-    toDoObjects.forEach(function(toDo) {
-        toDo.tags.forEach(function(tag) {
-            var flag = true;
-            organizedByTag.forEach(function(element) {
-                if(element.name === tag) {
-                    element.toDos.push(toDo.description);
-                    flag = false;
-                }
-            });
-            if(flag) {
-                organizedByTag.push({"name":tag,"toDos":[toDo.description]});
-            }
-        });
-    });
-
-    return organizedByTag;
-}
-
 var main = function(toDoObjects) {
     "use strict";
+
+    var getToDos = function() {
+        var toDos = toDoObjects.map(function(toDo) {
+            return toDo.description;
+        });
+
+        return toDos;
+    }
+
+    var getOrganizedByTag = function() {
+        var organizedByTag = [];
+        toDoObjects.forEach(function(toDo) {
+            toDo.tags.forEach(function(tag) {
+                var flag = true;
+                organizedByTag.forEach(function(element) {
+                    if(element.name === tag) {
+                        element.toDos.push(toDo.description);
+                        flag = false;
+                    }
+                });
+                if(flag) {
+                    organizedByTag.push({"name":tag,"toDos":[toDo.description]});
+                }
+            });
+        });
+
+        return organizedByTag;
+    }
 
     $(".tabs a span").toArray().forEach(function(element) {
         var $element = $(element);
@@ -67,7 +40,7 @@ var main = function(toDoObjects) {
             $("main .content").empty();
 
             if($element.parent().is(":nth-child(1)")) {
-                var toDos = getToDos(toDoObjects);
+                var toDos = getToDos();
 
                 var i;
                 $content = $("<ul>");
@@ -76,7 +49,7 @@ var main = function(toDoObjects) {
                 }
             }
             else if($element.parent().is(":nth-child(2)")) {
-                var toDos = getToDos(toDoObjects);
+                var toDos = getToDos();
                 
                 $content = $("<ul>");
                 toDos.forEach(function(todo) {
@@ -84,7 +57,7 @@ var main = function(toDoObjects) {
                 });
             }
             else if($element.parent().is(":nth-child(3)")) {
-                var organizedByTag = getOrganizedByTag(toDoObjects);
+                var organizedByTag = getOrganizedByTag();
 
                 $content = $("<div>");
                 organizedByTag.forEach(function(tag) {
@@ -104,10 +77,14 @@ var main = function(toDoObjects) {
                 var $button = $("<button>").text("+");
                 $button.on("click", function() {
                     if($input.val() !== "" && $tagInput.val() !== "") {
-                        toDoObjects.push({
+                        var todo = {
                             "description":$input.val(),
-                            "tags":$tagInput.val().split(",")
+                            "tags":$tagInput.val()
+                        };
+                        $.post("api/postToDo", todo, function(response) {
+                            console.log(response);
                         });
+
                         $input.val("");
                         $tagInput.val("");
                     }
@@ -127,7 +104,9 @@ var main = function(toDoObjects) {
     $(".tabs a:first-child span").trigger("click");
 }
 
-$(document).ready(function() {
-    main(todosjson);
+$.getJSON("api/getToDos", function(data) {
+    $(document).ready(function() {
+        main(data);
+    });
 });
 
