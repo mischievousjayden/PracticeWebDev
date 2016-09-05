@@ -1,0 +1,17 @@
+{
+  "name": "Amazeriffic",
+  "version": "0.0.0",
+  "description": "Study Web Development",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~4.14.0",
+    "body-parser": "~1.15.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "BSD-2-Clause"
+}
