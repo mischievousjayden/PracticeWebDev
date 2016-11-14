@@ -1,3 +1,9 @@
-LearningWebAppDevelopment/Amazeriffic/node_modules/*
-Webpack/node_modules/*
+# LearningWebAppDevelopment
+LearningWebAppDevelopment/Amazeriffic/node_modules/
+
+# Webpack
+Webpack/node_modules/
+
+# ReactJS
+ReactJS/HelloReactJS/node_modules/
 
