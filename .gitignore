@@ -6,4 +6,6 @@ Webpack/node_modules/
 
 # ReactJS
 ReactJS/HelloReactJS/node_modules/
+ReactJS/TodoList/node_modules/
+ReactJS/TodoList/src/bower_components/
 
