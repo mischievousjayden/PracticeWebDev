@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router";
 
-export default class Header extends React.Component {
+export default class DefaultHeader extends React.Component {
     render () {
         return(
             <header class="mdl-layout__header">
@@ -8,8 +9,8 @@ export default class Header extends React.Component {
                     <span class="mdl-layout-title">{this.props.title}</span>
                     <div class="mdl-layout-spacer"></div>
                     <nav class="mdl-navigation mdl-layout--large-screen-only">
-                        {this.props.list.map(function(link) {
-                            return <a class="mdl-navigation__link" href="">{link}</a>;
+                        {this.props.list.map((element, index) => {
+                            return <Link class="mdl-navigation__link" key={index} to={element.link}>{element.text}</Link>
                         })}
                     </nav>
                 </div>

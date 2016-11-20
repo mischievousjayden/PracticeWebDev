@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Footer extends React.Component {
+export default class DefaultFooter extends React.Component {
     render () {
         return(
 			<footer class="mdl-mini-footer">
